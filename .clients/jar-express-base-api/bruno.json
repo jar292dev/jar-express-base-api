@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "jar-express-base-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
