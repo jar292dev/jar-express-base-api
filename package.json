@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Proyecto desarrollo api simple en Express",
   "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -32,10 +35,15 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.5.0",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0",
+    "jiti": "^2.6.1",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "5.8",
+    "typescript-eslint": "^8.57.2"
   }
 }
