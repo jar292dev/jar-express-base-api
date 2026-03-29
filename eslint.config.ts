@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
-import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
   {
@@ -14,22 +13,18 @@ export default defineConfig([
     },
   },
   tseslint.configs.recommended,
-  //prettierConfig,
   {
     rules: {
-      // Prettier como regla de ESLint
-      //'prettier/prettier': 'error',
-
       // Variables y código muerto
-      'no-unused-vars': 'off',                        // desactivar la base (usa la de TS)
+      'no-unused-vars': 'off', // desactivar la base (usa la de TS)
       '@typescript-eslint/no-unused-vars': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',   // evitar usar 'any'
+      '@typescript-eslint/no-explicit-any': 'warn', // evitar usar 'any'
 
       // Buenas prácticas
-      'eqeqeq': 'error',                              // === obligatorio
-      'no-var': 'error',                              // prohibir var
-      'prefer-const': 'warn',                         // preferir const
-      'no-console': 'warn',                           // recordar quitar logs
+      eqeqeq: 'error', // === obligatorio
+      'no-var': 'error', // prohibir var
+      'prefer-const': 'warn', // preferir const
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // recordar quitar logs
 
       // Estilo
       // 'semi': ['error', 'always'],                    // punto y coma obligatorio
