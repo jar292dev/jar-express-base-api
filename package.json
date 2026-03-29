@@ -10,7 +10,9 @@
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -40,8 +42,10 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.5.0",
     "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "globals": "^17.4.0",
     "jiti": "^2.6.1",
+    "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "5.8",
     "typescript-eslint": "^8.57.2"
