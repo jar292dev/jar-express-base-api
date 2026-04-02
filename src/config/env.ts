@@ -10,6 +10,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
   // ─── Base de datos ─────────────────────────────────────
+  DB_TYPE: z.enum(['postgres', 'mariadb', 'mysql']).default('postgres'),
   DB_HOST: z.string().default('localhost'),
   DB_PORT: z.coerce.number().default(5432),
   DB_USER: z.string().default('postgres'),
