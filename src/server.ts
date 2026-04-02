@@ -1,25 +1,29 @@
-import app from './app';
 import { Server } from 'http';
 import { env } from './config/env';
+import { KyselyClient } from './db/kysely';
 
 let server: Server;
 
-// ─── Arranque ─────────────────────────────────────────────────
 async function bootstrap(): Promise<void> {
   try {
-    // 1. Conectar a la DB
-    // console.log('🔌  Conectando a la base de datos...');
-    // await connectDB();
-    // console.log('✅  Conexión a la base de datos establecida');
+    // 1. Crear el pool — DEBE ir antes de cualquier import que use container
+    KyselyClient.connect();
 
-    // 2. Iniciar el servidor
+    // 2. Verificar que la BD responde
+    await KyselyClient.ping();
+    // eslint-disable-next-line no-console
+    console.log('✅  Conexión a la base de datos establecida');
+
+    // 3. Importar app de forma dinámica — así container.ts se resuelve
+    //    después de que connect() ya ha inicializado la instancia
+    const { default: app } = await import('./app');
+
+    // 4. Iniciar el servidor
     server = app.listen(env.PORT, env.HOST, () => {
+      // eslint-disable-next-line no-console
       console.log(
         `🚀 Servidor escuchando en http://${env.HOST}:${env.PORT} en modo ${env.NODE_ENV}`,
       );
-
-      // 3. Arrancar workers (si los hubiera)
-      // startWorkers();
     });
   } catch (error) {
     console.error('❌ Error arrancando el servidor:', error);
@@ -28,16 +32,13 @@ async function bootstrap(): Promise<void> {
 }
 
 async function shutdown(signal: string): Promise<void> {
+  // eslint-disable-next-line no-console
   console.log(`\n${signal} recibido — cerrando servidor...`);
 
-  // 1. Dejar de aceptar nuevas conexiones
   server.close(async () => {
     try {
-      // 2. Parar workers
-
-      // 3. Desconectar de la DB
-      // await disconnectDB();
-
+      await KyselyClient.disconnect();
+      // eslint-disable-next-line no-console
       console.log('✅ Cierre limpio completado');
       process.exit(0);
     } catch (error) {
@@ -46,27 +47,27 @@ async function shutdown(signal: string): Promise<void> {
     }
   });
 
-  // Forzar cierre si tarda más de 10 segundos
   setTimeout(() => {
     console.error('⚠️  Cierre forzado por timeout');
     process.exit(1);
   }, 10_000);
 }
 
-// ─── Señales del sistema ──────────────────────────────────────
-process.on('SIGTERM', () => shutdown('SIGTERM')); // Podman stop
-process.on('SIGINT', () => shutdown('SIGINT')); // Ctrl+C
+// Manejar señales de cierre
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
 
-// ─── Errores no capturados ────────────────────────────────────
+// Manejar errores no capturados
 process.on('uncaughtException', (error: Error) => {
   console.error('❌ uncaughtException:', error);
   process.exit(1);
 });
 
+// Manejar promesas rechazadas no capturadas
 process.on('unhandledRejection', (reason: unknown) => {
   console.error('❌ unhandledRejection:', reason);
   process.exit(1);
 });
 
-// ─── Iniciar ──────────────────────────────────────────────────
+// Arrancar el servidor
 bootstrap();

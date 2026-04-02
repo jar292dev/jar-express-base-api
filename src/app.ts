@@ -2,21 +2,19 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import { router } from './router';
 import { env } from './config/env';
+import { errorMiddleware } from './shared/middlewares/error.middleware';
 
-
-// ─── Creación de la aplicación Express ─────────────────────────────
+// ─── Inicialización de la aplicación ─────────────────────────────────────────────
 const app: Application = express();
 
-// ─── Parsers ──────────────────────────────────────────────────
+// ─── Middlewares globales ─────────────────────────────────────────────
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-
-// ─── Logger ───────────────────────────────────────────────────
+// ─── Logger ─────────────────────────────────────────────
 app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
-
-// ─── Health check ─────────────────────────────────────────────
+// ─── Rutas de la API ─────────────────────────────────────────────
 app.get('/health', (_req, res) => {
   res.json({
     status: 'ok',
@@ -25,16 +23,10 @@ app.get('/health', (_req, res) => {
   });
 });
 
-
-// ─── Documentación (solo development) ─────────────────────────
-
-
-// ─── Rutas de la API ──────────────────────────────────────────
 app.use('/api', router);
 
+// ─── Middleware de error ─────────────────────────────────────────────
+app.use(errorMiddleware);
 
-// ─── Middleware de manejo de errores (siempre al final) ─────────
-
-
+// ─── Exportar la aplicación ─────────────────────────────────────────────
 export default app;
-// ──── Fin del archivo ─────────────────────────────────────────────
