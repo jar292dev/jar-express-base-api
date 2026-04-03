@@ -1,0 +1,15 @@
+meta {
+  name: GET By Filters
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/api/v1/notices/?title=Mantenimiento
+  body: none
+  auth: none
+}
+
+params:query {
+  title: Mantenimiento
+}

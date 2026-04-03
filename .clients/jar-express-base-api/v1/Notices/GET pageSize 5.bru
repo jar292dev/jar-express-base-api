@@ -1,0 +1,15 @@
+meta {
+  name: GET pageSize 5
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_URL}}/api/v1/notices?pageSize=5
+  body: none
+  auth: none
+}
+
+params:query {
+  pageSize: 5
+}
