@@ -16,7 +16,10 @@ export abstract class BaseRepository<T extends BaseEntity, W, C, U> {
     findMany: (args: { where?: W; orderBy?: object; skip?: number; take?: number }) => Promise<T[]>;
     findUnique: (args: { where: { id: string } }) => Promise<T | null>;
     create: (args: { data: C }) => Promise<T>;
-    update: (args: { where: { id: string }; data: U }) => Promise<T>;
+    update: (args: {
+      where: { id: string };
+      data: U | (Omit<U, 'version'> & { version?: { increment: number } });
+    }) => Promise<T>;
     delete: (args: { where: { id: string } }) => Promise<T>;
   };
 
@@ -54,9 +57,14 @@ export abstract class BaseRepository<T extends BaseEntity, W, C, U> {
   }
 
   async update(id: string, data: U): Promise<T> {
-    return this.delegate.update({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const delegate = this.delegate as any;
+    return delegate.update({
       where: { id },
-      data: { ...(data as object), version: { increment: 1 } } as U,
+      data: {
+        ...(data as object),
+        version: { increment: 1 },
+      },
     });
   }
 
