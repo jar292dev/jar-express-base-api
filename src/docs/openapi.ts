@@ -46,5 +46,6 @@ export function mountSwagger(app: Application): void {
   // También disponible como JSON puro para importar en Postman/Insomnia
   app.get('/api/docs.json', (_req, res) => res.json(spec));
 
+  // eslint-disable-next-line no-console
   console.log(`📖 Swagger UI disponible en http://${env.HOST}:${env.PORT}/api/docs`);
 }

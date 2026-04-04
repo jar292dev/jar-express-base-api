@@ -19,7 +19,7 @@ const NoticeSchema = registry.register(
 // GET /notices
 registry.registerPath({
   method: 'get',
-  path: '/notices',
+  path: '/v1/notices',
   tags: ['Notices'],
   request: { query: noticeFilterSchema },
   responses: {
@@ -45,7 +45,7 @@ registry.registerPath({
 // GET /notices/:id
 registry.registerPath({
   method: 'get',
-  path: '/notices/{id}',
+  path: '/v1/notices/{id}',
   tags: ['Notices'],
   request: { params: z.object({ id: z.string().uuid() }) },
   responses: {
@@ -60,7 +60,7 @@ registry.registerPath({
 // POST /notices
 registry.registerPath({
   method: 'post',
-  path: '/notices',
+  path: '/v1/notices',
   tags: ['Notices'],
   request: { body: { content: { 'application/json': { schema: noticeCreateSchema } } } },
   responses: {
@@ -74,7 +74,7 @@ registry.registerPath({
 // PUT /notices/:id
 registry.registerPath({
   method: 'put',
-  path: '/notices/{id}',
+  path: '/v1/notices/{id}',
   tags: ['Notices'],
   request: {
     params: z.object({ id: z.string().uuid() }),
@@ -92,7 +92,7 @@ registry.registerPath({
 // DELETE /notices/:id
 registry.registerPath({
   method: 'delete',
-  path: '/notices/{id}',
+  path: '/v1/notices/{id}',
   tags: ['Notices'],
   request: { params: z.object({ id: z.string().uuid() }) },
   responses: {
