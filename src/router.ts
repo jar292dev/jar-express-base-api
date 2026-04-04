@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import noticesRouter from './modules/notices/notices.routes';
 
-export const router = Router();
+export const v1Router = Router();
 
-router.use('/v1/notices', noticesRouter);
+v1Router.use('/notices', noticesRouter);

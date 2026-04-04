@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
-import { router } from './router';
+import { v1Router } from './router';
 import { env } from './config/env';
 import { errorMiddleware } from './shared/middlewares/error.middleware';
 import { mountSwagger } from './docs/openapi';
@@ -29,7 +29,7 @@ app.get('/health', (_req, res) => {
 mountSwagger(app);
 
 // Resto de rutas
-app.use('/api', router);
+app.use('/api/v1', v1Router);
 
 // ─── Middleware de error ─────────────────────────────────────────────
 app.use(errorMiddleware);
