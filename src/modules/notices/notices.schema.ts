@@ -22,7 +22,7 @@ export const noticeCreateSchema = z.object({
     message: VALIDATION_MESSAGES.INVALID_ENUM('level', ['info', 'warning', 'danger', 'success']),
   }),
   isActive: z.coerce.boolean(),
-  startsAt: z.date().optional(),
+  startsAt: z.coerce.date().optional(),
   endsAt: z.date().optional(),
 });
 
@@ -31,8 +31,8 @@ export const noticeUpdateSchema = z.object({
   body: z.string().min(1, 'El cuerpo es requerido').optional(),
   level: z.enum(['info', 'warning', 'danger', 'success']).optional(),
   isActive: z.boolean().optional(),
-  startsAt: z.date().optional(),
-  endsAt: z.date().optional(),
+  startsAt: z.coerce.date().optional(),
+  endsAt: z.coerce.date().optional(),
 });
 
 export type NoticeFilterDTO = z.infer<typeof noticeFilterSchema>;
