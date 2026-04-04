@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import { env } from '../config/env';
 
 // Importar los docs de cada módulo para que se auto-registren
+import '../modules/notices/notices.docs';
 
 function generateSpec() {
   const generator = new OpenApiGeneratorV3(registry.definitions);
