@@ -1,0 +1,21 @@
+meta {
+  name: PUT modify
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{API_URL}}/api/v1/notices/5ed0fd53-2197-44ab-bb3e-3fc1707a3267
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Prueba modificada",
+    "body": "Notice de prueba",
+    "level": "info",
+    "isActive": false,
+    "startsAt": "2026-03-22T11:11:10.000Z"
+  }
+}
