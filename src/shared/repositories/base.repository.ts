@@ -1,6 +1,7 @@
 import { BaseEntity } from '../types/base.entity';
 import { PaginatedFilter } from '../schemas/common.schema';
 import { PaginatedResult } from '../types/api.types';
+import { v7 as uuidv7 } from 'uuid';
 
 // T = tipo del modelo (Notice, User, etc.)
 // W = tipo del where de Prisma (Prisma.NoticeWhereInput, etc.)
@@ -51,7 +52,9 @@ export abstract class BaseRepository<T extends BaseEntity, W, C, U> {
   }
 
   async create(data: C): Promise<T> {
-    return this.delegate.create({ data });
+    return this.delegate.create({
+      data: { ...data, id: uuidv7() },
+    });
   }
 
   async update(id: string, data: U): Promise<T> {
