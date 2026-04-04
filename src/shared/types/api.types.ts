@@ -1,3 +1,8 @@
+export interface PaginatedResult<T> {
+  data: T[];
+  meta: ApiMeta;
+}
+
 // Respuesta de éxito
 export interface ApiResponse<T> {
   data: T;

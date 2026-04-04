@@ -10,7 +10,7 @@ export const paginatedFilterSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(100).optional().default(20),
 
   // Ordenación — los valores concretos se sobreescriben al extender
-  orderBy: z.string().optional().default('created_at'),
+  orderBy: z.string().optional().default('createdAt'),
   orderDirection: z.enum(['asc', 'desc']).optional().default('desc'),
 });
 
