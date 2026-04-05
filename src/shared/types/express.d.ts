@@ -6,6 +6,7 @@ declare global {
       validatedBody?: Record<string, unknown>;
       validatedQuery?: Record<string, unknown>;
       validatedParams?: Record<string, unknown>;
+      context: RequestContext;
     }
   }
 }

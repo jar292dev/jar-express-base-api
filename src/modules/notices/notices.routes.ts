@@ -8,9 +8,9 @@ import {
 } from '../../shared/middlewares/validate.middleware';
 import { NoticesController } from './notices.controller';
 import { NoticesService } from './notices.service';
-import { container } from '../../shared/container';
+import { container } from '../../container';
 
-const service = new NoticesService(container.noticesRepository);
+const service = new NoticesService(container.noticesRepository, container.auditRepository);
 const controller = new NoticesController(service);
 
 const router = Router();

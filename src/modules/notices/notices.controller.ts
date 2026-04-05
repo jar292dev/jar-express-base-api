@@ -47,7 +47,7 @@ export class NoticesController {
   ): Promise<void> => {
     try {
       const dto = req.validatedBody as CreateNoticeDTO;
-      const notice = await this.noticesService.createNotice(dto);
+      const notice = await this.noticesService.createNotice(dto, req.context);
       res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(notice));
     } catch (err) {
       next(err);
@@ -61,7 +61,7 @@ export class NoticesController {
   ): Promise<void> => {
     try {
       const dto = req.validatedBody as UpdateNoticeDTO;
-      const notice = await this.noticesService.updateNotice(req.params.id, dto);
+      const notice = await this.noticesService.updateNotice(req.params.id, dto, req.context);
       res.status(HTTP_STATUS.OK).json(ApiResponse.success(notice));
     } catch (err) {
       next(err);
@@ -70,7 +70,7 @@ export class NoticesController {
 
   deleteNotice = async (req: Request<UUID>, res: Response, next: NextFunction): Promise<void> => {
     try {
-      await this.noticesService.deleteNotice(req.params.id);
+      await this.noticesService.deleteNotice(req.params.id, req.context);
       res.status(HTTP_STATUS.NO_CONTENT).send();
     } catch (err) {
       next(err);

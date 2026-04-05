@@ -4,12 +4,15 @@ import { v1Router } from './router';
 import { env } from './config/env';
 import { errorMiddleware } from './shared/middlewares/error.middleware';
 import { mountSwagger } from './docs/openapi';
+import { requestContextMiddleware } from './shared/middlewares/request-context.middleware';
+
 // ─── Inicialización de la aplicación ─────────────────────────────────────────────
 const app: Application = express();
 
 // ─── Middlewares globales ─────────────────────────────────────────────
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(requestContextMiddleware);
 
 // ─── Logger ─────────────────────────────────────────────
 app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
